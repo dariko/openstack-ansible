@@ -201,4 +201,4 @@
 - name: ceph-osd
   scm: git
   src: https://github.com/ceph/ansible-ceph-osd
-  version: v3.0.8
+  version: master
