@@ -80,6 +80,14 @@
         _provider_networks: "{{ pndata }}"
       tags:
         - always
+  tasks:
+    - name: patch bgp_dragent.py
+      when:
+      -   "'neutron_bgp_dragent' in group_names"
+      patch:
+        src: /etc/openstack_deploy/patches/bgp_dragent.py-auth_type
+        basedir: /openstack/venvs/neutron-16.0.5/lib/python2.7/site-packages/neutron_dynamic_routing
+      notify: Restart neutron services
 
   roles:
     - role: "os_neutron"
