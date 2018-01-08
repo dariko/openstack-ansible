@@ -1,0 +1,26 @@
+-   name: Setup OVS bridges
+    hosts: neutron_openvswitch_agent
+    user: root
+    tasks:
+    -   name: install openvswitch-switch
+        apt:
+            name: openvswitch-switch
+            state: present
+    -   name: bridges
+        openvswitch_bridge:
+            bridge: "{{item.bridge}}"
+        notify: restart neutron-openvswitch-agent
+        with_items: "{{neutron_ovs_bridges}}"
+    -   name: bridges ports
+        openvswitch_port:
+            bridge: "{{item.bridge}}"
+            port: "{{item.interface}}"
+        notify: restart neutron-openvswitch-agent
+        with_items: "{{neutron_ovs_bridges}}"
+
+    handlers:
+    -   name: restart neutron-openvswitch-agent
+        failed_when: false
+        service:
+            name: neutron-openvswitch-agent
+            state: restarted
