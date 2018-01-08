@@ -75,3 +75,9 @@
   environment: "{{ deployment_environment_variables | default({}) }}"
   tags:
     - designate
+  tasks:
+    - name: copy rndc key
+      copy:
+        src: /etc/bind/rndc.key
+        dest: /etc/rndc.key
+      notify: Restart designate services
