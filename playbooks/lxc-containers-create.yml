@@ -24,6 +24,26 @@
   user: root
   roles:
     - role: "lxc_container_create"
+  tasks:
+    - name: Wait for container connectivity
+      wait_for_connection:
+        connect_timeout: "{{ lxc_container_wait_params.connect_timeout | default(omit) }}"
+        delay: "{{ lxc_container_wait_params.delay | default(omit) }}"
+        sleep: "{{ lxc_container_wait_params.sleep | default(omit) }}"
+        timeout: "{{ lxc_container_wait_params.timeout | default(omit) }}"
+    - name: add public6 address to rc.local
+      copy:
+        content: |
+          #!/bin/sh -e
+          ip -6 a a {{public6_address}} dev br-public6
+          ip link set br-public6 up
+          exit 0
+        dest: /etc/rc.local
+        mode: 0755
+        owner: root
+        group: root
+      when: inventory_hostname in groups['neutron_agents_container']
+      notify: Lxc container restart
   post_tasks:
     - name: Wait for container connectivity
       wait_for_connection:
