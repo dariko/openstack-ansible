@@ -81,3 +81,7 @@
         src: /etc/bind/rndc.key
         dest: /etc/rndc.key
       notify: Restart designate services
+    - name: install bind9utils
+      apt:
+        name: bind9utils
+        state: present
