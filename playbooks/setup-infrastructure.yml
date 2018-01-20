@@ -14,6 +14,7 @@
 # limitations under the License.
 
 - include: unbound-install.yml
+- include: ovs-setup.yml
 - include: repo-install.yml
 - include: haproxy-install.yml
 - include: memcached-install.yml
