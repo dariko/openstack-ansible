@@ -146,8 +146,8 @@ networking_calico_git_install_branch: 8b55fb6c7645011020e78c592721c085c92b2c51 #
 networking_calico_git_project_group: neutron_all
 
 ## Nova service
-nova_git_repo: https://git.openstack.org/openstack/nova
-nova_git_install_branch: b535f0808526c8eba37f15e83cede536e4e06029 # HEAD of "stable/pike" as of 19.01.2018
++nova_git_repo: https://github.com/dariko/nova
++nova_git_install_branch: fa99716ea10ebe3c2e263dfe9839041ae1af1678 # HEAD of "stable/pike" as of 29.01.2018 + networking_vsphere patch
 nova_git_project_group: nova_all
 
 
